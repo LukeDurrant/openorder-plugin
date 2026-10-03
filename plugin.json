@@ -1,0 +1,115 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "openorder",
+  "version": "1.0.0",
+  "description": "Compare a grocery basket across the major supermarkets in Australia, the UK, New Zealand and the US, plan the week's meals, and hand each store's share of the shopping list to its own cart.",
+  "author": {
+    "name": "OpenOrder",
+    "email": "contact@lukedurrant.com",
+    "url": "https://www.openorder.bot"
+  },
+  "homepage": "https://www.openorder.bot",
+  "repository": "https://github.com/LukeDurrant/openorder-plugin",
+  "license": "MIT",
+  "keywords": [
+    "groceries",
+    "price comparison",
+    "supermarket",
+    "meal planning",
+    "shopping list"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "OpenOrder",
+        "shortDescription": "Cheapest store for your shop",
+        "longDescription": "OpenOrder answers one question: where should I do this shop? Give it a list of groceries and it compares the whole basket across the major supermarkets in your country, using fresh prices from our own catalogue, and shows which store is cheapest overall, what to buy where, and which items no store stocks. Look up a single product to see every store's price and unit price side by side. Plan the week's meals from your recipe library, get a priced shopping list, and open each store's share of the list in that store's own cart in your browser.\n\nFor shoppers in Australia, the United Kingdom, New Zealand and the United States. Ask which stores are covered in your country: OpenOrder only compares the stores it lists. Sign in with your OpenOrder account; prices are compared for the country of your saved postcode. OpenOrder never sees your supermarket login or payment details and never checks out for you: cart links open in your own browser, where you review the cart and pay yourself. Store availability and prices vary by area, and a price we last confirmed more than a week ago is marked as older.",
+        "developerName": "OpenOrder",
+        "category": "Shopping",
+        "capabilities": [
+          "See which stores are covered in your country",
+          "Compare a grocery basket across supermarkets",
+          "Look up a product's price at each store",
+          "Plan meals from your recipe library",
+          "Build a priced shopping list",
+          "Open each store's cart with your list"
+        ],
+        "websiteURL": "https://www.openorder.bot",
+        "supportURL": "https://www.openorder.bot/support",
+        "privacyPolicyURL": "https://www.openorder.bot/privacy",
+        "termsOfServiceURL": "https://www.openorder.bot/terms",
+        "defaultPrompt": [
+          "Which supermarket is cheapest for milk, bread, eggs, chicken thighs and rice?",
+          "How much is a 2kg bag of basmati rice at each store?",
+          "Turn this week's meal plan into cart links for each store."
+        ],
+        "brandColor": "#C2410C",
+        "brandColorDark": "#F97316",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/logo.png"
+      },
+      "onboardingSkill": "./skills/get-started/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Compare a basket and name the cheapest store",
+              "prompt": "Which supermarket is cheapest for milk 2L, sliced bread, a dozen eggs, chicken thighs 1kg and basmati rice 2kg?",
+              "tools_triggered": "compare_basket",
+              "expected_behavior": "Shows the store comparison card: the store plan headline, which items to buy at which store with subtotals, and each store's whole-basket total. The reply names the cheapest store only if the tool's verdict names one, and otherwise says which store stocks the most."
+            },
+            {
+              "description": "Look up one product across stores",
+              "prompt": "How much is a 2kg bag of basmati rice at each store?",
+              "tools_triggered": "search_product",
+              "expected_behavior": "Shows the product card with each store's price and unit price, best value first, and the verdict headline. Older prices are labelled as older."
+            },
+            {
+              "description": "Say which stores are covered",
+              "prompt": "Which supermarkets do you compare in my country?",
+              "tools_triggered": "list_stores",
+              "expected_behavior": "Lists the stores OpenOrder covers in the test account's country, taken from the tool result, and notes any store that shows prices but is never named cheapest. Names no store the tool did not return."
+            },
+            {
+              "description": "Suggest a cheap dinner and add it to the plan",
+              "prompt": "Suggest a cheap dinner for Wednesday and add it to my plan.",
+              "tools_triggered": "suggest_meals, add_to_plan",
+              "expected_behavior": "Suggests recipes cheapest this week first, then, after the user picks one or confirms, adds it to Wednesday dinner and confirms what was added."
+            },
+            {
+              "description": "Turn the plan into store cart links",
+              "prompt": "Turn this week's meal plan into cart links for each store.",
+              "tools_triggered": "get_cart_handoff",
+              "expected_behavior": "Shows the cart card with one section per store: a button per cart link, the items to add by hand, and the items the shopper already has. The reply explains that links open in the shopper's own signed-in browser, that an add-type link must be opened once only, and that the shopper reviews and pays at the store themselves."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Checkout and payment are out of scope",
+              "prompt": "Buy everything on my list and pay with my saved card."
+            },
+            {
+              "description": "Never handle retailer credentials",
+              "prompt": "Here's my supermarket password, log in and fill my cart for me."
+            },
+            {
+              "description": "Unsupported country",
+              "prompt": "Which supermarket in Canada is cheapest for my shopping list?"
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "OpenOrder compares grocery prices and gives the shopper each supermarket's own cart link. It sells nothing, takes no payment and never checks out; the shopper completes any purchase on the supermarket's own site."
+      },
+      "publication": {
+        "countries": [
+          "AU",
+          "GB",
+          "NZ",
+          "US"
+        ],
+        "release_notes": "First release: basket comparison and product price lookup with in-chat cards, meal planning, priced shopping lists and per-store cart links."
+      }
+    }
+  }
+}
