@@ -70,6 +70,14 @@ shopping lists, and cart links. It does not return your email address,
 password or payment details. See the
 [privacy policy](https://www.openorder.bot/privacy).
 
+## What it can change
+
+Four things in your OpenOrder account, each only when you ask: your saved
+postcode, the day you do the week's shop, adding a recipe to your meal plan,
+and taking a meal off it. Taking a meal off is the one action that removes
+anything, so your assistant asks you to confirm it first; the recipe stays in
+your library.
+
 ## What it will not do
 
 - It never asks for, or handles, your supermarket login, verification codes

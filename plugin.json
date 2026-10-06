@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorder",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Compare a grocery basket across the major supermarkets in Australia, the UK, New Zealand and the US, plan the week's meals, and hand each store's share of the shopping list to its own cart.",
   "author": {
     "name": "OpenOrder",
@@ -62,7 +62,7 @@
               "description": "Look up one product across stores",
               "prompt": "How much is a 2kg bag of basmati rice at each store?",
               "tools_triggered": "search_product",
-              "expected_behavior": "Shows the product card with each store's price and unit price, best value first, and the verdict headline. Older prices are labelled as older."
+              "expected_behavior": "Shows the product card with each store's price and unit price, best value first, and names the best-value offer at each store. A single-product verdict is given only when the request named one product."
             },
             {
               "description": "Say which stores are covered",
@@ -74,13 +74,13 @@
               "description": "Suggest a cheap dinner and add it to the plan",
               "prompt": "Suggest a cheap dinner for Wednesday and add it to my plan.",
               "tools_triggered": "suggest_meals, add_to_plan",
-              "expected_behavior": "Suggests recipes cheapest this week first, then, after the user picks one or confirms, adds it to Wednesday dinner and confirms what was added."
+              "expected_behavior": "Suggests recipes with the reason each was picked, then, after the user picks one or confirms, adds it to Wednesday dinner and confirms what was added."
             },
             {
               "description": "Turn the plan into store cart links",
               "prompt": "Turn this week's meal plan into cart links for each store.",
               "tools_triggered": "get_cart_handoff",
-              "expected_behavior": "Shows the cart card with one section per store: a button per cart link, the items to add by hand, and the items the shopper already has. The reply explains that links open in the shopper's own signed-in browser, that an add-type link must be opened once only, and that the shopper reviews and pays at the store themselves."
+              "expected_behavior": "Shows the cart card with one section per store: a button per cart link, the items to add by hand, and the items the shopper already has. The reply explains that links open in the shopper's own signed-in browser, that an add-type link must be opened once only, that the shopper reviews and pays at the store themselves, and what doing the whole shop at one store would cost instead."
             }
           ],
           "negative": [
